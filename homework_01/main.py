@@ -31,7 +31,7 @@ def is_prime(n):
     return True
 
 
-def filter_numbers():
+def filter_numbers(nums: list, filter_type: str):
     """
     функция, которая на вход принимает список из целых чисел,
     и возвращает только чётные/нечётные/простые числа
@@ -42,3 +42,9 @@ def filter_numbers():
     >>> filter_numbers([2, 3, 4, 5], EVEN)
     <<< [2, 4]
     """
+    if filter_type == ODD:
+        return list(filter(lambda x: x % 2 != 0, nums))
+    if filter_type == EVEN:
+        return list(filter(lambda x: x % 2 == 0, nums))
+    if filter_type == PRIME:
+        return list(filter(is_prime, nums))
