@@ -44,7 +44,9 @@ def filter_numbers(nums: list, filter_type: str):
     """
     if filter_type == ODD:
         return list(filter(lambda x: x % 2 != 0, nums))
-    if filter_type == EVEN:
+    elif filter_type == EVEN:
         return list(filter(lambda x: x % 2 == 0, nums))
-    if filter_type == PRIME:
+    elif filter_type == PRIME:
         return list(filter(is_prime, nums))
+    else:
+        raise ValueError('filter_type error')
