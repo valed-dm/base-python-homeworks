@@ -12,6 +12,7 @@ python = "^3.11"
 aiohttp = "^3.8.4"
 sqlalchemy = "^1.4"
 asyncio = "^3.4.3"
+python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
