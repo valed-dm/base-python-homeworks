@@ -24,7 +24,7 @@ from sqlalchemy.orm import relationship
 
 load_dotenv()
 
-PG_CONN_URI = str(os.environ.get("SQLALCHEMY_PG_CONN_URI"))
+PG_CONN_URI = os.environ.get("SQLALCHEMY_PG_CONN_URI")
 DB_ECHO = os.environ.get("DB_ECHO") == "True"
 
 async_engine: AsyncEngine = create_async_engine(url=PG_CONN_URI, echo=DB_ECHO)
