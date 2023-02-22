@@ -56,7 +56,7 @@ class TimestampMixin:
 
 class User(TimestampMixin, Base):
     name = Column(String(30), unique=True, nullable=False)
-    username = Column(String(10), unique=True, nullable=False)
+    username = Column(String(30), unique=True, nullable=False)
     email = Column(String(50), unique=True, nullable=False)
 
     posts = relationship("Post", back_populates="user")
