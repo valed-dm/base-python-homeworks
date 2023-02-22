@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "homework-03"
+version = "0.1.0"
+description = "docker container with fastapi app"
+authors = ["valed-dm <dmvaled@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "homework_03"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.92.0"
+uvicorn = "^0.20.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
