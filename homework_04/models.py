@@ -16,11 +16,11 @@ from sqlalchemy import DateTime, func
 from sqlalchemy import ForeignKey
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import declared_attr
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
 
@@ -28,7 +28,7 @@ PG_CONN_URI = os.environ.get("SQLALCHEMY_PG_CONN_URI")
 DB_ECHO = os.environ.get("DB_ECHO") == "True"
 
 async_engine: AsyncEngine = create_async_engine(url=PG_CONN_URI, echo=DB_ECHO)
-Session = async_sessionmaker(
+Session = sessionmaker(
     bind=async_engine,
     class_=AsyncSession,
     expire_on_commit=False
