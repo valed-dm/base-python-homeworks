@@ -2,11 +2,15 @@
 создайте асинхронные функции для выполнения запросов к ресурсам (используйте aiohttp)
 """
 import asyncio
+import os
 
 import aiohttp
+from dotenv import load_dotenv
 
-USERS_DATA_URL = "https://jsonplaceholder.typicode.com/users"
-POSTS_DATA_URL = "https://jsonplaceholder.typicode.com/posts"
+load_dotenv()
+
+USERS_DATA_URL = os.environ.get("USERS_URL")
+POSTS_DATA_URL = os.environ.get("POSTS_URL")
 
 
 async def fetch_json(url: str) -> list[dict]:
@@ -16,18 +20,18 @@ async def fetch_json(url: str) -> list[dict]:
             return data
 
 
-async def get_users() -> list[dict]:
+async def fetch_users_data() -> list[dict]:
     users = await fetch_json(USERS_DATA_URL)
     return users
 
 
-async def get_posts() -> list[dict]:
+async def fetch_posts_data() -> list[dict]:
     posts = await fetch_json(POSTS_DATA_URL)
     return posts
 
 
-async def main():
-    results = await asyncio.gather(get_users(), get_posts())
+async def fetch_all_data():
+    results = await asyncio.gather(fetch_users_data(), fetch_posts_data())
     users_list, posts_list = results
 
     print(f"{'UID:' : <6}{'user:' : <30}{'username:' : <20}{'email:' : <50}")
@@ -39,6 +43,8 @@ async def main():
     for post in posts_list:
         print(f"{'%4d' % post['id'] : <6}{post['title'] : <100}")
 
+    return results
+
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(fetch_all_data())
