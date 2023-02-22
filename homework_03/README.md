@@ -1,4 +1,9 @@
 ### Домашнее задание "Docker контейнер c веб-приложением"
+### Запуск приложения:
+#### pull from Docker Hub:
+`$ docker pull dmvaled/menus-app:latest`  
+#### Run menus-app locally:
+`$ docker run -it --name menus-app -p 8000:8000 dmvaled/menus-app`
 #### Задача:
 - скопируйте папку `homework_03` для этой домашки 
   (Памятка: https://github.com/OtusTeam/BasePython/tree/homeworks-new)
