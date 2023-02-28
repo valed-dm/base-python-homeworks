@@ -1,16 +1,25 @@
 """
 создайте асинхронные функции для выполнения запросов к ресурсам (используйте aiohttp)
 """
-import asyncio
+import logging
 import os
 
 import aiohttp
+import asyncio
 from dotenv import load_dotenv
 
 load_dotenv()
 
 USERS_DATA_URL = os.environ.get("USERS_URL")
 POSTS_DATA_URL = os.environ.get("POSTS_URL")
+
+logging.basicConfig(
+    format="[%(asctime)s.%(msecs)03d] %(module)s:%(lineno)d %(levelname)s - %(message)s",
+    level=logging.DEBUG,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+log = logging.getLogger(__name__)
 
 
 async def fetch_json(url: str) -> list[dict]:
@@ -34,14 +43,8 @@ async def fetch_all_data():
     results = await asyncio.gather(fetch_users_data(), fetch_posts_data())
     users_list, posts_list = results
 
-    print(f"{'UID:' : <6}{'user:' : <30}{'username:' : <20}{'email:' : <50}")
-    for user in users_list:
-        print(f"{'%4d' % user['id'] : <6}{user['name'] : <30}{user['username'] : <20}{user['email'].lower() : <50}")
-    print()
-
-    print(f"{'PID:' : <6}{'title:' : <10}")
-    for post in posts_list:
-        print(f"{'%4d' % post['id'] : <6}{post['title'] : <100}")
+    log.info("%s users data loaded", len(users_list))
+    log.info("%s user's posts loaded", len(posts_list))
 
     return results
 
