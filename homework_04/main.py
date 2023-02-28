@@ -12,13 +12,21 @@
   (используйте полученные из запроса данные, передайте их в функцию для добавления в БД)
 - закрытие соединения с БД
 """
+import logging
+
 import asyncio
-
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from jsonplaceholder_requests import fetch_all_data
 from models import Base, User, Post
 from models import async_engine, Session
+from sqlalchemy.ext.asyncio import AsyncSession
+
+logging.basicConfig(
+    format="[%(asctime)s.%(msecs)03d] %(module)s:%(lineno)d %(levelname)s - %(message)s",
+    level=logging.DEBUG,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+
+log = logging.getLogger(__name__)
 
 
 async def create_tables():
@@ -58,6 +66,8 @@ async def async_main():
         users_data, posts_data = await fetch_all_data()
         await create_users(session, users_data)
         await create_posts(session, posts_data)
+
+        log.info("users, posts tables successfully created")
 
 
 def main():
