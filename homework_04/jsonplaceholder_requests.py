@@ -10,8 +10,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-USERS_DATA_URL = os.environ.get("USERS_URL")
-POSTS_DATA_URL = os.environ.get("POSTS_URL")
+USERS_DATA_URL = os.environ.get("USERS_URL") if os.environ.get(
+    "USERS_URL") else "https://jsonplaceholder.typicode.com/users"
+POSTS_DATA_URL = os.environ.get("POSTS_URL") if os.environ.get(
+    "POSTS_URL") else "https://jsonplaceholder.typicode.com/posts"
 
 logging.basicConfig(
     format="[%(asctime)s.%(msecs)03d] %(module)s:%(lineno)d %(levelname)s - %(message)s",
