@@ -16,12 +16,12 @@ from flask import render_template
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 
-@app.get("/")
+@app.get("/", endpoint="index")
 def index_view():
     return render_template("index.html")
 
 
-@app.get("/about/")
+@app.get("/about/", endpoint="about")
 def about_view():
     return render_template("about.html")
 
