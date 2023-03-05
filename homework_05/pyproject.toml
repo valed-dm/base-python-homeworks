@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "homework-05"
+version = "0.1.0"
+description = "base Flask web application"
+authors = ["valed-dm <dmvaled@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "homework_05"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Flask = "^2.2.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
