@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+
+  app:
+    # image: https://mydomainname.com/my-docker-registry/reponame:latest
+    build:
+      dockerfile: docker-build/app/Dockerfile
+      context: ./
+    environment:
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pg/${POSTGRES_DB}
+      CONFIG_NAME: ProductionConfig
+    networks:
+      - default
+    ports:
+      - "5000:80"
+    depends_on:
+      pg:
+        condition: service_healthy
+    container_name: dc_app
+
+  pg:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: ${PGDATA}
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: [ "CMD","sh","-c","pg_isready -U $$POSTGRES_USER -h $$(hostname -i)" ]
+      interval: 5s
+      timeout: 3s
+      retries: 7
+    container_name: docker_pg
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    container_name: adminer
+
+volumes:
+  db-data:
