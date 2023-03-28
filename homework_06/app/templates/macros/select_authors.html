@@ -1,0 +1,14 @@
+{% macro select_authors(authors) %}
+    <select
+            id="author"
+            class="form-select"
+            name="author"
+            style="width: 150px;!important"
+            aria-label="Author selector"
+    >
+        <option value="all" selected="selected">all</option>
+        {% for author in authors %}
+            <option value="{{ author }}">{{ author }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}

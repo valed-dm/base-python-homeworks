@@ -1,0 +1,37 @@
+{% macro app_menu() %}
+    <nav class="navbar navbar-expand-sm">
+        <div class="container-fluid border-bottom justify-content-between px-0">
+            <div class="navbar-brand">
+                <h1>Google Books API App</h1>
+            </div>
+            <div class="bg border border-white rounded">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        {% for label, name in [
+                            ("Books search page", "index"),
+                            ("Personal Library", "library")
+                        ] %}
+                            {% set url = url_for(name) %}
+                            <li class="nav-item">
+                                <a
+                                        class="nav-link {{ 'text-success bg-white'
+                                                     if url == request.path
+                                                     else 'text-white' }}"
+                                        aria-current="page"
+                                        href="{{ url }}"
+                                >
+                                    {{ label }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endmacro %}
