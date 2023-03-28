@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from 'macros/app_flashed_info.html' import flashed_info %}
+{% from 'macros/book_card.html' import book_card %}
+
+{% block main %}
+    <div class="text-center">
+        {% if books_found == "0" %}
+            <h3>
+                You are on the book search page.<br>
+                Google Books API App is waiting for your request.<br><br>
+                No search has been run yet.<br>
+                Please, fill in the above form and press "start search".
+            </h3>
+        {% endif %}
+        {{ flashed_info(books_found) }}
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        {% for book in books %}
+            {{ book_card(book) }}
+        {% endfor %}
+    </div>
+{% endblock %}

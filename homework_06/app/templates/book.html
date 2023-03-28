@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from 'macros/book_modal_add.html' import book_modal_add %}
+{% from 'macros/app_flashed_info.html' import flashed_info %}
+{% from 'macros/book_view.html' import book_view %}
+
+{% block main %}
+    <div>
+        <div class="d-flex justify-content-end mb-2">
+            {{ book_modal_add(book) }}
+        </div>
+        <div class="text-center">
+            {{ flashed_info() }}
+        </div>
+        {{ book_view(book) }}
+
+    </div>
+{% endblock %}
