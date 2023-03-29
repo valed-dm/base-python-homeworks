@@ -20,6 +20,18 @@
 ### Запуск приложения
 
 ```code
+.env.sample -> .env
+SECRET_KEY=any_key_string
+SESSION_TYPE=redis
+CACHE_REDIS_URL=redis://0.0.0.0:6379
+GOOGLE_API_KEY=AIzaSyDu7Yp0Q4DT9pGGcIx4YnVIJxeoBM6XQnI
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin_12345
+POSTGRES_DB=gbooks
+PGDATA=/var/lib/postgresql/data/pgdata
+```
+
+```code
 docker compose up -d
 ```
 
