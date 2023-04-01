@@ -15,7 +15,16 @@ def fetch_result(title: str, pace: str, category: str, sort: str):
         books_raw_data = res[1]
 
         for item in books_raw_data:
-            book = Book(*data_prepare(item))
+            api_data = data_prepare(item)
+            book = Book(
+                authors=api_data.authors,
+                categories=api_data.categories,
+                date=api_data.date,
+                description=api_data.description,
+                google_book_id=api_data.google_book_id,
+                image_src=api_data.image_src,
+                title=api_data.title
+            )
             books.append(book)
 
     books = sorting_results(books, category, sort)

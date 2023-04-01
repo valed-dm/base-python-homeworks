@@ -3,13 +3,13 @@ from dataclasses import dataclass
 
 @dataclass
 class Book:
-    authors: [str]
-    categories: [str]
-    date: str
-    description: str
-    google_book_id: str
-    image_src: str
-    title: str
+    authors: str = "no author"
+    categories: str = "no category"
+    date: str = "1900-01-01"
+    description: str = "no description"
+    google_book_id: str = ""
+    image_src: str = ""
+    title: str = "no title"
 
     # initial mock data:
 

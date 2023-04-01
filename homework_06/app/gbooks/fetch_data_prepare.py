@@ -1,4 +1,7 @@
-def date_restore(date) -> str:
+from .schemas import Book
+
+
+def date_restore(date: str) -> str:
     if len(date) == 4:
         return str(date) + "-01-01"
     elif len(date) == 7:
@@ -8,36 +11,26 @@ def date_restore(date) -> str:
 
 
 def data_prepare(item):
-    authors = item['volumeInfo']['authors'] \
-        if 'authors' in item['volumeInfo'] \
-           and item['volumeInfo']['authors'] \
-        else ['no author']
+    Book.google_book_id = item['id']
 
-    categories = item['volumeInfo']['categories'] \
-        if 'categories' in item['volumeInfo'] \
-           and item['volumeInfo']['categories'] \
-        else ['no category']
+    if 'authors' in item['volumeInfo'] and item['volumeInfo']['authors']:
+        Book.authors = item['volumeInfo']['authors']
 
-    date = date_restore(item['volumeInfo']['publishedDate']) \
-        if 'publishedDate' in item['volumeInfo'] \
-           and item['volumeInfo']['publishedDate'] \
-        else '1900-01-01'
+    if 'categories' in item['volumeInfo'] and item['volumeInfo']['categories']:
+        Book.categories = item['volumeInfo']['categories']
 
-    description = item['volumeInfo']['description'] \
-        if 'description' in item['volumeInfo'] \
-           and item['volumeInfo']['description'] \
-        else 'no description'
+    if 'publishedDate' in item['volumeInfo'] and item['volumeInfo']['publishedDate']:
+        Book.date = date_restore(item['volumeInfo']['publishedDate'])
 
-    book_id = item['id']
+    if 'description' in item['volumeInfo'] and item['volumeInfo']['description']:
+        Book.description = item['volumeInfo']['description']
 
-    image_src = ""
     if 'imageLinks' in item['volumeInfo'] and item['volumeInfo']['imageLinks']['thumbnail']:
-        image_src = item['volumeInfo']['imageLinks']['thumbnail']
+        Book.image_src = item['volumeInfo']['imageLinks']['thumbnail']
     elif 'imageLinks' in item['volumeInfo'] and item['volumeInfo']['imageLinks']['smallThumbnail']:
-        image_src = item['volumeInfo']['imageLinks']['smallThumbnail']
+        Book.image_src = item['volumeInfo']['imageLinks']['smallThumbnail']
 
-    title = item['volumeInfo']['title'] \
-        if item['volumeInfo']['title'] \
-        else 'no title'
+    if item['volumeInfo']['title']:
+        Book.title = item['volumeInfo']['title']
 
-    return [authors, categories, date, description, book_id, image_src, title]
+    return Book
