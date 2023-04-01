@@ -8,7 +8,9 @@ from ..models import Author, Book, Category, Image
 
 def add_book(book, rubric, remarks):
     b = book
-    authors = authors_string(b.authors)
+    book_authors = [author.strip() for author in b.authors]
+    book_categories = [category.strip() for category in b.categories]
+    authors = authors_string(book_authors)
     id_exists = db.session.query(
         exists().
         where(Book.google_book_id == b.google_book_id)). \
@@ -31,23 +33,23 @@ def add_book(book, rubric, remarks):
         # fills in the authors table
         db_authors = db.session.query(Author).all()
         db_authors = [item.name.lower() for item in db_authors]
-        for author in b.authors:
+        for author in book_authors:
             if author.lower() not in db_authors:
                 author_for_book = Author(name=author)
                 db.session.add(author_for_book)
 
         # fills in the category table
         db_categories = db.session.query(Category).all()
-        db_categories = [item.name for item in db_categories]
-        for category in b.categories:
-            if category not in db_categories:
+        db_categories = [item.name.lower() for item in db_categories]
+        for category in book_categories:
+            if category.lower() not in db_categories:
                 category_for_book = Category(name=category)
                 db.session.add(category_for_book)
 
         # fills in the book-author association table
         db_authors = db.session.query(Author).all()
         db_authors = [
-            author for author in db_authors if author.name in b.authors
+            author for author in db_authors if author.name in book_authors
         ]
         for author in db_authors:
             book_to_library.authors.append(author)
@@ -55,7 +57,7 @@ def add_book(book, rubric, remarks):
         # fills in the book-category association table
         db_categories = db.session.query(Category).all()
         db_categories = [
-            category for category in db_categories if category.name in b.categories
+            category for category in db_categories if category.name in book_categories
         ]
         for category in db_categories:
             book_to_library.categories.append(category)
