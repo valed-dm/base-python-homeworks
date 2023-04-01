@@ -34,7 +34,7 @@
 Вопросы остались, например не получилось использовать insert on conflict:
 <https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#insert-on-conflict-upsert>
 
-```code
+```python
     from sqlalchemy.dialects.postgresql import insert
 
     insert_stmt = insert(my_table).values(
