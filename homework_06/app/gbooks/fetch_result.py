@@ -3,12 +3,12 @@ from .helpers import sorting_results
 from .schemas import Book
 
 
-def fetch_result(title: str, pace: str, category: str, sort: str):
+def fetch_result(r):
     books = []
     books_found = "0"
 
-    if title:
-        uri = fetch_uri_create(title, pace)
+    if r.title:
+        uri = fetch_uri_create(r.title, r.pace)
         res = fetch_books(uri)
 
         books_found = res[0]
@@ -27,6 +27,6 @@ def fetch_result(title: str, pace: str, category: str, sort: str):
             )
             books.append(book)
 
-    books = sorting_results(books, category, sort)
+    books = sorting_results(books, r.category, r.sort)
 
     return [books_found, books]
