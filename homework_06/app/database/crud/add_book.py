@@ -1,18 +1,18 @@
-from database import db
 from flask import flash, redirect, url_for
-from gbooks.helpers import authors_string
+from sqlalchemy import select
 
+from database import db
+from gbooks.helpers import authors_string
 from ..models import Author, Book, Category, Image
 
 
 def add_book(book, rubric, remarks):
     b = book
     authors = authors_string(b.authors)
-    library_idx = db.session.query(Book.google_book_id).all()
-    library_idx = [item[0] for item in library_idx]
+    library_ids = db.session.scalars(select(Book.google_book_id)).all()
 
     # prepares book data to be filled in books table
-    if b.google_book_id not in library_idx:
+    if b.google_book_id not in library_ids:
         book_to_library = Book(
             authors_str=authors,
             title=b.title,
