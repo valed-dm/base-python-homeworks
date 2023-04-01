@@ -1,7 +1,7 @@
 from flask import flash, redirect, url_for
 from sqlalchemy import exists
 from sqlalchemy import func
-from sqlalchemy import select
+from sqlalchemy.dialects.postgresql import insert
 
 from database import db
 from gbooks.helpers import authors_string
@@ -13,9 +13,8 @@ def add_book(book, rubric, remarks):
     book_authors = [author.strip().lower() for author in b.authors]
     book_categories = [category.strip().lower() for category in b.categories]
     authors_str = authors_string(book_authors)
-    id_exists = db.session.query(
-        exists().
-        where(Book.google_book_id == b.google_book_id)). \
+    id_exists = db.session. \
+        query(exists().where(Book.google_book_id == b.google_book_id)). \
         scalar()
 
     # prepares book data to be filled in books table
@@ -33,18 +32,16 @@ def add_book(book, rubric, remarks):
         )
 
         # fills in the authors table
-        authors_lower = db.session.scalars(select(func.lower(Author.name))).all()
         for author in book_authors:
-            if author not in authors_lower:
-                author_for_book = Author(name=author.title())
-                db.session.add(author_for_book)
+            insert_stmt = insert(Author).values(name=author.title())
+            do_nothing_stmt = insert_stmt.on_conflict_do_nothing()
+            db.session.execute(do_nothing_stmt)
 
         # fills in the category table
-        categories_lower = db.session.scalars(select(func.lower(Category.name))).all()
         for category in book_categories:
-            if category not in categories_lower:
-                category_for_book = Category(name=category.title())
-                db.session.add(category_for_book)
+            insert_stmt = insert(Category).values(name=category.title())
+            do_nothing_stmt = insert_stmt.on_conflict_do_nothing()
+            db.session.execute(do_nothing_stmt)
 
         # fills in the book-author association table
         book_auth = db.session.query(Author).filter(func.lower(Author.name).in_(book_authors))
