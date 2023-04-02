@@ -4,7 +4,7 @@
     <div class="mb-2">
         <div class="mb-1">
             <a
-                    href="{{ url_for('book', google_book_id=book.google_book_id) }}"
+                    href="{{ url_for('api.book', google_book_id=book.google_book_id) }}"
             >
                 {{ book_image(book.image_src, width=120, height=180) }}
             </a>

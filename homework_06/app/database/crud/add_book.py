@@ -61,11 +61,11 @@ def add_book(book, rubric, remarks):
             f"'{b.title}' was added to '{rubric}' with '{remarks}'",
             category="success"
         )
-        return redirect(url_for("book", book=b))
+        return redirect(url_for("api.book", book=b))
 
     else:
         flash(
             f"'{b.title}': --- This book already exists in the library ---",
             category="info"
         )
-        return redirect(url_for("book", book=b))
+        return redirect(url_for("api.book", book=b))

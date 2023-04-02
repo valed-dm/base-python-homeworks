@@ -6,7 +6,7 @@
         {% for book in books %}
             <div>
                 <a
-                        href="{{ url_for('library_book', book_id=book.id) }}"
+                        href="{{ url_for('lib.library_book', book_id=book.id) }}"
                 >
                     {{ book_image(book.image_src.url, width=90, height=135) }}
                 </a>
