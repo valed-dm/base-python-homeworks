@@ -76,8 +76,8 @@ def library_view():
     library_books = get_books()
     r = get_args_library(request)
     if "rubric" in args:
-        library_books = sort_books(r.rubric, r.category, r.author, r.sort, library_books=library_books)
-    info_sort_library(r.rubric, r.category, r.author, r.sort)
+        library_books = sort_books(r, library_books=library_books)
+    info_sort_library(r)
 
     return render_template("library_books.html", authors=authors, books=library_books)
 

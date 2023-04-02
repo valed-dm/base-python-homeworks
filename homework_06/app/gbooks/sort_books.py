@@ -26,17 +26,17 @@ def sort_date(sort, books):
     return res
 
 
-def sort_books(rubric, category, author, sort, library_books):
+def sort_books(r, library_books):
     # for book in library_books:
     #     print(book.__dict__)
     result = sort_rubric(
-        rubric,
+        r.rubric,
         sort_category(
-            category,
+            r.category,
             sort_author(
-                author,
+                r.author,
                 sort_date(
-                    sort,
+                    r.sort,
                     library_books
                 )
             )
