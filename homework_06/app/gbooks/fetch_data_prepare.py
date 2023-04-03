@@ -7,7 +7,7 @@ def date_restore(date: str) -> str:
     elif len(date) == 7:
         return str(date) + "-01"
     else:
-        return date
+        return date[:10]
 
 
 def data_prepare(item):
