@@ -2,7 +2,7 @@
 {% from 'macros/select_categories.html' import select_categories %}
 {% from 'macros/select_authors.html' import select_authors %}
 
-{% macro my_books_search(authors) %}
+{% macro my_books_search(authors, cats) %}
     <div class="text-center">
         <h2>
             Personal Library Assets:
@@ -22,7 +22,7 @@
                     <label for="category">
                         categories:
                     </label>
-                    {{ select_categories() }}
+                    {{ select_categories(cats) }}
                 </div>
             </div>
             <div class="d-flex justify-content-center mb-2 px-3">

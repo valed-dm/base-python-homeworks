@@ -4,7 +4,7 @@ from flask import render_template
 from flask import request
 from flask import session
 
-from database.crud import get_books, get_book, del_book, get_authors
+from database.crud import get_books, get_book, del_book, get_authors, get_cats
 from gbooks import info_delete, info_sort_library, sort_books, get_args_library
 
 bp = Blueprint('lib', __name__)
@@ -14,6 +14,7 @@ bp = Blueprint('lib', __name__)
 def library_view():
     args = request.args
     authors = get_authors()
+    cats = get_cats()
     if "del_book" in args:
         google_book_id = args.get("del_book")
         del_book(google_book_id)
@@ -28,7 +29,7 @@ def library_view():
         library_books = sort_books(r, library_books=library_books)
     info_sort_library(r)
 
-    return render_template("library_books.html", authors=authors, books=library_books)
+    return render_template("library_books.html", authors=authors, cats=cats, books=library_books)
 
 
 @bp.route("/library/book/", endpoint="library_book")

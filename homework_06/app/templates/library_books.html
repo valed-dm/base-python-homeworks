@@ -4,7 +4,7 @@
 {% from 'macros/my_books.html' import my_books %}
 
 {% block top %}
-    {{ my_books_search(authors) }}
+    {{ my_books_search(authors, cats) }}
 {% endblock %}
 {% block main %}
     <div class="p-lg-1">

@@ -8,7 +8,7 @@ def sort_rubric(rubric, books):
 def sort_category(category, books):
     res = books
     if category != "all":
-        res = [book for book in books if category in [cat.name.lower() for cat in book.categories]]
+        res = [book for book in books if category in [cat.name for cat in book.categories]]
     return res
 
 
