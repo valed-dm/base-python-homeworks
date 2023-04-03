@@ -13,8 +13,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto">
                         {% for label, name in [
-                            ("API page", "api.index"),
-                            ("Personal Library", "lib.library")
+                            ("API", "api.index"),
+                            ("Library", "lib.library")
                         ] %}
                             {% set url = url_for(name) %}
                             <li class="nav-item">
