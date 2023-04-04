@@ -3,8 +3,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Book:
-    authors: str = "no author"
-    categories: str = "no category"
+    authors: tuple[str] = "no author",
+    categories: tuple[str] = "no category",
     date: str = "1900-01-01"
     description: str = "no description"
     google_book_id: str = ""
@@ -14,8 +14,8 @@ class Book:
     # initial mock data:
 
     # book_data = [
-    #     ["Arthur C. Clarke", "Stanley Kubrick"],
-    #     "Fiction",
+    #     ("Arthur C. Clarke", "Stanley Kubrick"),
+    #     ("Fiction"),
     #     "01-01-2016",
     #     "A deluxe hardcover edition of the wondrous space adventure that is the basis for Stanley "
     #     "Kubrick’s Oscar-winning film—now celebrating its 50th anniversary Part of Penguin Galaxy",
