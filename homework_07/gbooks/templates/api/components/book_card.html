@@ -1,0 +1,30 @@
+<div class="mb-2">
+    <div class="mb-1">
+        <a
+                href="{% url 'book' %}?id={{ book.google_book_id }}"
+        >
+            {% include 'gbooks/components/book_image.html' %}
+        </a>
+    </div>
+    <div class="text-center">
+        <div style="font-size: x-small">
+            <div>
+                <i>
+                    {{ book.categories }}
+                </i>
+            </div>
+        </div>
+        <div style="font-size: small">
+            <strong>
+                {{ book.date }}
+            </strong>
+        </div>
+        <div style="font-size: x-small">
+            <div>
+                <i>
+                    {{ book.authors }}
+                </i>
+            </div>
+        </div>
+    </div>
+</div>

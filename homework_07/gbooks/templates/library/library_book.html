@@ -1,0 +1,15 @@
+{% extends "library/library_books.html" %}
+
+{% block main %}
+    <div class="d-flex justify-content-end align-items-center mb-2 gap-2">
+        {% include "library/components/book_modal_delete.html" %}
+        <a
+                type="button"
+                class="btn btn-outline-light h-25"
+                href="{% url 'library' %}"
+        >
+            back&nbspto&nbsplibrary
+        </a>
+    </div>
+    {% include "gbooks/components/book_view.html" %}
+{% endblock %}

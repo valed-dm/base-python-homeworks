@@ -1,0 +1,13 @@
+{% extends "gbooks/base.html" %}
+
+{% block top %}
+    {% include "library/components/my_books_search.html" %}
+{% endblock %}
+{% block main %}
+    <div class="p-lg-1">
+        <div class="text-center">
+            {% include "gbooks/components/app_flashed_info.html" %}
+        </div>
+        {% include "library/components/my_books.html" %}
+    </div>
+{% endblock %}
