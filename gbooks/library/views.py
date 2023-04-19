@@ -1,56 +1,70 @@
 import json
 
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_protect
+from django.views.generic import DetailView, ListView
 
+from api.schemas import Book
 from library.crud import delete_book
-from library.helpers import books_to_session
+from library.helpers import book_prepare
 from library.helpers import get_args_library
-from library.helpers import get_library_book
 from library.helpers import info_sort_library
+from library.helpers import library_to_view
 from library.helpers import sort_books
 from library.schemas import ArgsLibrary
+from .models import Book as DB_Book
 
 
-@csrf_protect
-def library_view(request):
-    # deletes book from library
-    if request.method == "GET" and "del" in request.GET:
-        delete_book(request)
-    # prepares library
-    lib = books_to_session(request)
-    # default sorting order
-    r = ArgsLibrary()
+class LibraryListView(ListView):
+    model = DB_Book
+    template_name = "library/library_books.html"
 
-    # gets custom sorting params from request
-    if request.method == "POST":
-        r = get_args_library(request)
-    # sorting
-    books_cards = sort_books(r, library_books=lib.books_cards)
-    info_sort_library(request, r)
+    def get(self, request, *args, **kwargs):
+        if "del" in request.GET:
+            delete_book(request)
+        return super().get(self, *args, *kwargs)
 
-    return render(request, "library/library_books.html", {
-        "books": books_cards,
-        # to fill data into dropdowns authors, categories:
-        "authors": lib.all_authors,
-        "categories": lib.all_categories,
-        "width": 105,
-        "height": 150
-    })
+    # POST requests are allowed
+    def post(self, *args, **kwargs):
+        return super().get(self, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        request = self.request
+        # library view sorting params
+        r = ArgsLibrary()
+        if request.method == "POST":
+            r = get_args_library(request)
+        lib = library_to_view(request)
+        # library view sorting
+        books_cards = sort_books(r, library_books=lib.books_cards)
+        info_sort_library(request, r)
+
+        context["books"] = books_cards
+        # data for dropdowns authors, categories:
+        context["authors"] = lib.all_authors
+        context["categories"] = lib.all_categories
+        # book cover image size:
+        context["width"] = 105
+        context["height"] = 150
+        return context
 
 
-@csrf_protect
-def library_book_view(request):
-    book = get_library_book(request)
-    # to fill data into dropdowns authors, categories
-    all_authors = json.loads(request.session.get("auth"))
-    all_categories = json.loads(request.session.get("cat-"))
+class BookDetailView(DetailView):
+    model = DB_Book
+    template_name = "library/library_book.html"
+    book = Book()
 
-    return render(request, "library/library_book.html", {
-        "book": book,
-        # to fill data into dropdowns authors, categories:
-        "authors": all_authors,
-        "categories": all_categories,
-        "width": 150,
-        "height": 210
-    })
+    def get_object(self, queryset=None):
+        self.book = DB_Book.objects.get(google_book_id=self.kwargs.get("slug"))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = book_prepare(self.book)
+        all_authors = json.loads(self.request.session.get("auth"))
+        all_categories = json.loads(self.request.session.get("cat-"))
+
+        context["book"] = book
+        context["authors"] = all_authors
+        context["categories"] = all_categories
+        context["width"] = 150
+        context["height"] = 210
+        return context
