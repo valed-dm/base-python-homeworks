@@ -1,5 +1,5 @@
 <div class="d-flex flex-wrap justify-content-center gap-2">
-    {% for book in books %}
+    {% for book in library.books_cards %}
         <div>
             <a
                      href="{% url 'library_book' slug=book.google_book_id %}"
