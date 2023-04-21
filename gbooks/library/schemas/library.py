@@ -6,6 +6,6 @@ from library.models import Book
 
 @dataclass
 class Library:
-    books_cards: List[Book]
+    books_cards: List[Book] = [],
     all_authors: List[str] = [],
     all_categories: List[str] = [],
