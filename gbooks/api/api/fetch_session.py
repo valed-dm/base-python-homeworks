@@ -21,9 +21,9 @@ def fetch_to_session(request):
         b_dict = b.__dict__
         b_serialized = json.dumps(b_dict, cls=DjangoJSONEncoder)
         b_key = book.google_book_id
-        # store serialized book object into django session
+        # stores serialized book object into django session
         request.session[b_key] = b_serialized
-        # provides authors,categories string truncated for books.html cards
+        # provides authors, categories string truncated for books.html cards
         b.authors = prepare_list(b.authors)
         b.categories = prepare_list(b.categories)
         books_cards.append(b)
