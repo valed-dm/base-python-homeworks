@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from 'macros/my_books_search.html' import my_books_search %}
+{% from 'macros/app_flashed_info.html' import flashed_info %}
+{% from 'macros/my_books.html' import my_books %}
+
+{% block top %}
+    {{ my_books_search(authors, cats) }}
+{% endblock %}
+{% block main %}
+    <div class="p-lg-1">
+        <div class="text-center">
+            {{ flashed_info() }}
+        </div>
+        {{ my_books(books) }}
+    </div>
+{% endblock %}
