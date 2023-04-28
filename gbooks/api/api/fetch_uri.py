@@ -15,6 +15,7 @@ def fetch_uri_create(title: str = "", res_qty: str = "10", start_point: str = "0
               + "&maxResults=" \
               + res_qty + \
               "&startIndex=" \
-              + start_point
+              + start_point \
+              + "&country=RU"
 
     return api_uri
