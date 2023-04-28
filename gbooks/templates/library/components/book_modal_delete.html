@@ -1,0 +1,69 @@
+<!-- Button trigger modal -->
+<button
+        type="button"
+        class="btn btn-outline-danger h-25"
+        data-bs-toggle="modal"
+        data-bs-target="#modal-delete-from-library"
+>
+    delete&nbspfrom&nbsplibrary
+</button>
+<!-- Modal -->
+<div
+        class="modal fade"
+        id="modal-delete-from-library"
+        tabindex="-1"
+        aria-labelledby="deleteFromLibrary"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content bg-modal">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title">
+                        "{{ book.title }}"
+                    </h3>
+                    <h4 class="modal-title">
+                    {{ book.authors|join:", " }}
+                    <br>
+                    {{ book.date }}
+                    <br>
+                    {{ book.categories|join:", " }}
+                    </h4>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex gap-5">
+                    <div class="w-25">
+                        {% include "gbooks/components/book_image.html" %}
+                    </div>
+                    <div class="w-75" style="text-indent: 30px; text-align: justify;">
+                        {{ book.description|slice:":1200" }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form
+                        method="GET"
+                        action="{% url 'library' %}"
+                >
+                    <input
+                            type="submit"
+                            class="hidden"
+                            id="delete_book"
+                            name="del"
+                            value="{{ book.google_book_id }}"
+
+                    />
+                </form>
+                <label
+                        for="delete_book"
+                        class="btn btn-outline-danger h-25"
+                >
+                    Delete from library
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

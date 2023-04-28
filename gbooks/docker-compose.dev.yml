@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+
+  web:
+    build:
+      dockerfile: docker-build/gbooks/Dockerfile
+      context: ./
+      args:
+        - ALLOWED_HOSTS=$ALLOWED_HOSTS
+        - SECRET_KEY=$SECRET_KEY
+        - GOOGLE_API_KEY=$GOOGLE_API_KEY
+    image: gb-app
+    environment:
+      ENVIRONMENT: production
+    command: gunicorn --bind 0.0.0.0:8000 gbooks.wsgi:application --workers=2
+    volumes:
+      - static_volume:/gbooks/static
+    #      - media_volume:/media
+    expose:
+      - "8000"
+    networks:
+      - django-network
+
+  nginx:
+    build:
+      dockerfile: docker-build/nginx/Dockerfile
+      context: ./
+    image: gb-nginx
+    restart: always
+    volumes:
+      - static_volume:/gbooks/static
+    #      - media_volume:/app/media
+    ports:
+      - "8080:80"
+    depends_on:
+      - web
+    networks:
+      - django-network
+
+networks:
+  django-network:
+    name: django-network
+
+volumes:
+  static_volume:
+  #  media_volume:

@@ -1,0 +1,20 @@
+{% extends "gbooks/base.html" %}
+
+{% block main %}
+    <div class="text-center">
+        {% if display_start_info %}
+            <h3>
+                You are on the book search page.<br>
+                Google Books API App is waiting for your request.<br><br>
+                No search has been run yet.<br>
+                Please, fill in the above form and press "start search".
+            </h3>
+        {% endif %}
+        {% include 'gbooks/components/app_flashed_info.html' %}
+    </div>
+    <div class="d-flex flex-wrap justify-content-center gap-2">
+        {% for book in books %}
+            {% include 'api/components/book_card.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}

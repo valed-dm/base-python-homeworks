@@ -1,0 +1,11 @@
+<div class="d-flex flex-wrap justify-content-center gap-2">
+    {% for book in books %}
+        <div>
+            <a
+                    href="{% url 'library_book' %}?id={{ book.google_book_id }}"
+            >
+                {% include "gbooks/components/book_image.html" %}
+            </a>
+        </div>
+    {% endfor %}
+</div>
