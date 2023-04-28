@@ -9,7 +9,7 @@ class Book:
     date: datetime.date = "1900-01-01"
     description: str = "no description"
     google_book_id: str = ""
-    image_src: str = "static/images/no_cover.webp"
+    image_src: str = "/static/images/no_cover.webp"
     title: str = "no title"
     rubric: str = "read_asap"
     remark: str = ""
