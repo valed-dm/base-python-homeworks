@@ -6,7 +6,7 @@
         aria-label="Author selector"
 >
     <option value="all" selected="selected">all</option>
-    {% for author in authors %}
+    {% for author in library.all_authors %}
         <option value="{{ author }}">{{ author }}</option>
     {% endfor %}
 </select>

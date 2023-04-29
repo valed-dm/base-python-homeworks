@@ -7,4 +7,3 @@ class ArgsLibrary:
     category: str = "all"
     author: str = "all"
     sort: str = "last_added"
-    b_key: str = None

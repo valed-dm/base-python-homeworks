@@ -18,13 +18,13 @@ from django.contrib import admin
 from django.urls import include, path
 
 from api.views import books_view, book_view
-from library.views import library_view, library_book_view
+from library.views import BookDetailView, LibraryListView
 
 urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path("admin/", admin.site.urls),
     path("", books_view, name="books"),
     path("book/", book_view, name="book"),
-    path("library/", library_view, name="library"),
-    path("library/book/", library_book_view, name="library_book"),
+    path("library/", LibraryListView.as_view(), name="library"),
+    path("library/book/<slug:slug>", BookDetailView.as_view(), name="library_book"),
 ]
