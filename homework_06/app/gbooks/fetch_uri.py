@@ -1,21 +1,20 @@
-import environ
+import os
 
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+from dotenv import load_dotenv
 
-api_key = env.str("GOOGLE_API_KEY")
+load_dotenv()
+
+api_key = os.getenv("GOOGLE_API_KEY")
 
 
 def fetch_uri_create(title: str = "", res_qty: str = "10", start_point: str = "0"):
     api_uri = "https://www.googleapis.com/books/v1/volumes?q=" \
               + title \
               + "&key=" \
-              + str(api_key) \
+              + api_key \
               + "&maxResults=" \
               + res_qty + \
               "&startIndex=" \
-              + start_point \
-              + "&country=RU"
+              + start_point
 
     return api_uri

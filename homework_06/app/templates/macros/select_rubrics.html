@@ -1,0 +1,13 @@
+{% macro select_rubrics() %}
+    <select
+            id="rubric"
+            class="form-select"
+            name="rubric"
+            aria-label="Rubric selector"
+    >
+        <option value="all" selected="selected">all</option>
+        <option value="read_asap">Read ASAP</option>
+        <option value="buy_asap">Buy ASAP</option>
+        <option value="review_later">Review later</option>
+    </select>
+{% endmacro %}

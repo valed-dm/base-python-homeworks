@@ -1,0 +1,9 @@
+{% macro book_image(url, width=150, height=220) %}
+    <img
+            src="{{ url if url else url_for('static', filename='images/no_cover.webp') }}"
+            alt="book cover"
+            class="mx-auto d-block rounded"
+            width="{{ width }}"
+            height="{{ height }}"
+    />
+{% endmacro %}

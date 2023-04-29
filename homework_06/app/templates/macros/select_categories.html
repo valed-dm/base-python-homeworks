@@ -1,0 +1,37 @@
+{% macro select_categories(cats=[]) %}
+    {% if cats|length > 0 %}
+        <select
+                id="category"
+                class="form-select"
+                name="category"
+                style="width: 150px;!important"
+                aria-label="Category selector"
+        >
+            <option value="all" selected="selected">all</option>
+            {% for cat in cats %}
+                <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+        </select>
+    {% else %}
+        <select
+                id="category"
+                class="form-select"
+                name="category"
+                style="width: 150px;!important"
+                aria-label="Category selector"
+        >
+            <option value="all" selected="selected">all</option>
+            <option value="art">art</option>
+            <option value="biography">biography</option>
+            <option value="computers">computers</option>
+            <option value="cooking">cooking</option>
+            <option value="education">education</option>
+            <option value="fiction">fiction</option>
+            <option value="history">history</option>
+            <option value="medical">medical</option>
+            <option value="poetry">poetry</option>
+            <option value="science">science</option>
+            <option value="travel">travel</option>
+        </select>
+    {% endif %}
+{% endmacro %}

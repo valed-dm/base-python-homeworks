@@ -1,0 +1,57 @@
+{% from 'macros/book_image.html' import book_image %}
+
+{% macro book_modal_delete(book) %}
+    <!-- Button trigger modal -->
+    <button
+            type="button"
+            class="btn btn-outline-danger h-25"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-delete-from-library"
+    >
+        delete&nbspfrom&nbsplibrary
+    </button>
+    <!-- Modal -->
+    <div
+            class="modal fade"
+            id="modal-delete-from-library"
+            tabindex="-1"
+            aria-labelledby="deleteFromLibrary"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content bg-modal">
+                <div class="modal-header">
+                    <div>
+                        <h3 class="modal-title">
+                            "{{ book.title }}"
+                        </h3>
+                        <h4 class="modal-title">
+                            {{ book.authors[0] }}, {{ book.date }}<br>{{ book.categories[0] }}
+                        </h4>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex gap-5">
+                        <div class="w-25">
+                            {{ book_image(book.image_src, width=120, height=170) }}
+                        </div>
+                        <div class="w-75" style="text-indent: 30px; text-align: justify;">
+                            {{ book.description[:500] + "..." }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a
+                            type="button"
+                            class="btn btn-outline-danger h-25"
+                            href="{{ url_for("lib.library", del_book=book.google_book_id) }}"
+                    >
+                        delete&nbspfrom&nbsplibrary
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

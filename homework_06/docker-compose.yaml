@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redislabs/redismod
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    container_name: redis
+
+  app:
+    # image: https://mydomainname.com/my-docker-registry/reponame:latest
+    build:
+      dockerfile: docker-build/app/Dockerfile
+      context: ./
+    image: gbooks-flask-app
+    environment:
+      CONFIG_NAME: ProductionConfig
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY}
+      SECRET_KEY: ${SECRET_KEY}
+      SESSION_TYPE: ${SESSION_TYPE}
+      CACHE_REDIS_URL: redis://redis:6379
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pg/${POSTGRES_DB}
+    ports:
+      - "5000:80"
+    depends_on:
+      pg:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    container_name: dc_app
+
+  pg:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: ${PGDATA}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: [ "CMD","sh","-c","pg_isready -U $$POSTGRES_USER -h $$(hostname -i)" ]
+      interval: 5s
+      timeout: 3s
+      retries: 7
+    container_name: docker_pg
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"
+    container_name: adminer
+
+volumes:
+  db-data:
+  redis-data:
+  redis-conf:
