@@ -1,0 +1,36 @@
+{% from 'macros/book_image.html' import book_image %}
+
+{% macro book_card(book) %}
+    <div class="mb-2">
+        <div class="mb-1">
+            <a
+                    href="{{ url_for('api.book', google_book_id=book.google_book_id) }}"
+            >
+                {{ book_image(book.image_src, width=120, height=180) }}
+            </a>
+        </div>
+        <div class="text-center">
+            <div style="font-size: x-small">
+                <div>
+                    <i>
+                        {{ book.categories[0][:16]
+                                        if book.categories[0]|length < 16
+                                        else book.categories[0][:14] + " .." }}
+                    </i>
+                </div>
+            </div>
+            <div style="font-size: small"><strong>- {{ book.date[:4] }} -</strong></div>
+            <div style="font-size: x-small">
+                <div>
+                    <i>
+                        {{ book.authors[0][:16]
+                                        if book.authors|length == 1
+                                        else book.authors[0][:16] + " + " }}
+                        {# this line counts and displays qty of non-displayed authors #}
+                        {{ (book.authors|length - 1)|string() if book.authors|length >= 2 }}
+                    </i>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

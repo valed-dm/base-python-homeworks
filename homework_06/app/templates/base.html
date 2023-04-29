@@ -1,0 +1,48 @@
+{% from 'macros/app_menu.html' import app_menu %}
+{% from 'macros/book_search.html' import book_search %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <title>
+        {% block title %}
+            GoogleBooksApp
+        {% endblock %}
+    </title>
+</head>
+<body>
+<div class="container">
+    <div class="pb-2">
+        {{ app_menu() }}
+        {% block top %}
+            {{ book_search() }}
+        {% endblock %}
+    </div>
+    <div>
+        {% block main %}
+            main block
+        {% endblock %}
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+{#<script>#}
+{#    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')#}
+{#    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => {#}
+{#        return new bootstrap.Tooltip(tooltipTriggerEl);#}
+{#    })#}
+{#</script>#}
+</body>
+<footer class="mt-5 text-center">
+    <span>
+        Flask-SQLAlchemy-Bootstrap
+    </span><br>
+    <span>
+            &copyOTUS, 2023
+    </span>
+</footer>
+</html>

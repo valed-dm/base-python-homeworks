@@ -1,0 +1,17 @@
+{% extends "library_books.html" %}
+{% from 'macros/book_modal_delete.html' import book_modal_delete %}
+{% from 'macros/book_view.html' import book_view %}
+
+{% block main %}
+    <div class="d-flex justify-content-end align-items-center mb-2 gap-2">
+        {{ book_modal_delete(book) }}
+        <a
+                type="button"
+                class="btn btn-outline-light h-25"
+                href="{{ url_for("lib.library") }}"
+        >
+            back&nbspto&nbsplibrary
+        </a>
+    </div>
+    {{ book_view(book) }}
+{% endblock %}
