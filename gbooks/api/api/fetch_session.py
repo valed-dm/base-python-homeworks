@@ -11,7 +11,6 @@ from .fetch_result import fetch_result
 
 
 def fetch_to_session(request):
-    books_cards = []
     r = get_args_book(request)
     books_found, books = fetch_result(r)
 
@@ -26,7 +25,6 @@ def fetch_to_session(request):
         # provides authors, categories string truncated for books.html cards
         b.authors = prepare_list(b.authors)
         b.categories = prepare_list(b.categories)
-        books_cards.append(b)
 
     info_search(request, r, books_found, len(books))
     # triggers no search performed info to be shown for initial page appearance
