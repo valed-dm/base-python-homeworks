@@ -10,6 +10,8 @@ class TestViews(TestCase):
     def test_library(self):
         response = self.client.get("/library/")
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["width"], 105)
+        self.assertEqual(response.context["height"], 150)
 
     def test_library_book(self):
         image_src = Image(image_src="/static/img/no_cover.webp")
@@ -31,3 +33,8 @@ class TestViews(TestCase):
         session.save()
         response = self.client.get('/library/book/test_book')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["width"], 150)
+        self.assertEqual(response.context["height"], 210)
+        self.assertTrue("library" in response.context)
+        self.assertEqual(response.context["library"].all_authors, "test_author")
+        self.assertEqual(response.context["library"].all_categories, "test_category")
