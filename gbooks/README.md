@@ -1,3 +1,47 @@
+# Краткий комментарий к ДЗ OTUS №9 "Тестирование Django приложения"
+
+В рамках задания выполнены следующие тесты:
+
+- проверена работа запроса к API и обработка полученных данных (api/tests/tests_api.py)
+
+- отвечают ли страницы приложения (api/tests/tests_views.py, library/tests/tests_views.py)
+  - API: страница поиска ("books") и просмотр книги ("book")
+  - Library: главная страница библиотеки ("library") и просмотр книги ("library_book")
+  - context data - получают ли страницы необходимые данные
+
+- проверены модели для создания таблиц в БД (library/tests/tests_models.py)
+
+- проверено покрытие приложения тестами - установлен пакет coverage
+  - результат: Coverage report: 80%
+
+Для тестирования использован базовый class SetUpTestData(TestCase), метод setUp(self).
+В контексте выполненных тестов применить tearDown(self) пока не удалось.
+
+Сложности при выполнении:
+
+При тестировании контекста подробного просмотра полученной от api книги оказалось,
+что запрос client.get(reverse(book_view)) создает пустой экземпляр Django session
+и тест контекста падает.
+Я изменил api.helpers.get_book.py добавив проверку наличия Django session key для возврата тестовых данных книги. 
+Теперь при ручном переходе на адрес /book/ отображаются служебные данные, предназначенные для прохождения
+теста передачи данных контекста на эту страницу.
+
+
+```python
+def test_context_book(self):                                          
+    # self.session is not suitable for this test                      
+    # client.get creates an empty session                             
+    # api.helpers.get_book.py is modified for testing purpose         
+    # now url /book/ can be accessed and returns empty book example   
+    response = self.client.get(reverse(book_view))                    
+    self.assertEqual("book" in response.context, True)                
+    self.assertEqual(response.context["width"], 150)                  
+    self.assertEqual(response.context["height"], 210)                 
+```
+
+Остались вопросы по тестированию api/api/fetch и helpers функций -  я ожидал, что покрытие увеличится после
+добавления api/tests/tests_api.py, но покрытие осталось таким же (80%). 
+
 # Краткий комментарий к ДЗ OTUS №7
 
 Доброго времени суток.
