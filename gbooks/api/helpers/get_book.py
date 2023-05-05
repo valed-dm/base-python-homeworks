@@ -9,12 +9,10 @@ def get_book(request):
     book.description = "This sample can't be added to library"
 
     try:
-        if request.__dict__["session"].__dict__['_SessionBase__session_key']:
-            b_key = request.GET.get('id')
-            b_serialized = request.session.get(f'{b_key}', None)
-            book = json.loads(b_serialized)
-            return book
+        b_key = request.GET.get('id')
+        b_serialized = request.session.get(f'{b_key}', None)
+        book = json.loads(b_serialized)
     except TypeError:
         pass
 
-    return book.__dict__
+    return book
