@@ -15,7 +15,7 @@ def add_book(request, book):
     # gets or creates authors, categories to be filled in m-2-m Book fields
     authors = get_or_create(Author, book_authors)
     categories = get_or_create(Category, book_categories)
-    # still not in use at a moment but is left for future
+    # still not in use at the moment but is left for the future
     authors_str = authors_string(book_authors)
     # checks if book already added to db before
     book_exists = Book.objects.all().filter(google_book_id=b["google_book_id"]).exists()

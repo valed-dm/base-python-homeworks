@@ -23,10 +23,10 @@ def books_view(request):
 @csrf_protect
 def book_view(request):
     book = {}
-    # retrieves book from django session
+    # retrieves a book from django session
     if request.method == "GET":
         book = get_book(request)
-    # adds book to library
+    # adds a book to a library
     if request.method == "POST":
         book = add_into_library(request)
 

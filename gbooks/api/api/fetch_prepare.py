@@ -33,7 +33,7 @@ def data_prepare(item):
     elif 'imageLinks' in item['volumeInfo'] and item['volumeInfo']['imageLinks']['smallThumbnail']:
         book.image_src = item['volumeInfo']['imageLinks']['smallThumbnail']
 
-    if item['volumeInfo']['title']:
+    if 'title' in item['volumeInfo'] and item['volumeInfo']['title']:
         book.title = item['volumeInfo']['title']
 
     return book

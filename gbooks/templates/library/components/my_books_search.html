@@ -29,7 +29,7 @@
                         aria-label="Categories selector"
                 >
                     <option value="all" selected="selected">all</option>
-                    {% for category in categories %}
+                    {% for category in library.all_categories %}
                         <option value="{{ category }}">{{ category }}</option>
                     {% endfor %}
                 </select>
